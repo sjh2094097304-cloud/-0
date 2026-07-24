@@ -274,7 +274,7 @@ GET /v2.6/{token}/{lon},{lat}/weather?alert=true&dailysteps=15&hourlysteps=48
 
 [![Star History Chart](https://api.star-history.com/svg?repos=qnmlgbd250/weather-none&type=Date)](https://star-history.com/#qnmlgbd250/weather-none&Date)
 
-如果觉得不错，请给个 ⭐ Star 支持一下！
+如果觉得不错，请给个 ⭐ Star 支持一下！!
 
 </div>
 
