@@ -78,9 +78,8 @@ fun WeatherScreen(
     val selectedCityId by viewModel.selectedCityId.collectAsStateWithLifecycle()
     val onboardingReady by viewModel.onboardingReady.collectAsStateWithLifecycle()
     val settings by settingsViewModel.settings.collectAsStateWithLifecycle()
-    // 强制永久会员，无视本地存储/后台校验
-    val isPremium = true
-    var showMembershipDialog by remember { mutableStateOf(true) }
+    val isPremium by settingsViewModel.isPremium.collectAsStateWithLifecycle()
+    var showMembershipDialog by remember { mutableStateOf(false) }
     // 免费用户定位名称截断到区/县级（取空格前第一段）
     val effectiveLocationName by remember {
         derivedStateOf {

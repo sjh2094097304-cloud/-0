@@ -64,7 +64,7 @@ fun SettingsScreen(
     onShowCardDetailChange: (Boolean) -> Unit,
     onShowCardSunriseSunsetChange: (Boolean) -> Unit,
     onShowCardMinutelyChange: (Boolean) -> Unit,
-    isPremium: Boolean = true,
+    isPremium: Boolean = false,
     activatedAt: Long = 0L,
     deviceId: String = "",
     onActivateCode: (String) -> ActivationResult = { _ -> ActivationResult.INVALID_CODE }
@@ -552,7 +552,7 @@ private fun ToggleItem(
     title: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    locked: Boolean = true,
+    locked: Boolean = false,
     onLockedClick: (() -> Unit)? = null
 ) {
     Row(

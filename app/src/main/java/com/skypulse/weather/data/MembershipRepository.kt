@@ -43,6 +43,10 @@ class MembershipRepository @Inject constructor(
     val isPremium: StateFlow<Boolean> = _isPremium.asStateFlow()
 
     private fun loadPremiumState(): Boolean {
+        // 全局开关：true=永久VIP，跳过激活校验
+        if (Companion.SKIP_ALL_ACTIVATION) {
+            return true
+        }
         return securePrefs.getBoolean(KEY_IS_PREMIUM, false)
     }
 
@@ -80,6 +84,17 @@ class MembershipRepository @Inject constructor(
      * @return 激活结果
      */
     fun activateCode(code: String): ActivationResult {
+        // 全局开关开启时，直接强制激活，跳过全部校验
+        if (Companion.SKIP_ALL_ACTIVATION) {
+            securePrefs.edit()
+                .putBoolean(KEY_IS_PREMIUM, true)
+                .putLong(KEY_ACTIVATED_AT, System.currentTimeMillis())
+                .commit()
+            _isPremium.value = true
+            return ActivationResult.SUCCESS
+        }
+
+        // 下方为原版完整校验逻辑
         if (_isPremium.value) {
             return ActivationResult.ALREADY_ACTIVATED
         }
@@ -110,6 +125,9 @@ class MembershipRepository @Inject constructor(
     }
 
     companion object {
+        // 全局总开关：true=关闭激活验证，永久解锁会员；false=恢复原版激活校验
+        const val SKIP_ALL_ACTIVATION = true
+
         private const val CODE_LENGTH = 8       // XXXX-XXXX 格式
         private const val DEVICE_ID_LEN = 8     // 设备 ID 显示长度
 
